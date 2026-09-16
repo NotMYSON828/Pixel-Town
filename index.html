@@ -28,6 +28,12 @@
                     <span class="value" id="dayCount">1</span>
                 </div>
             </div>
+            <div class="happiness-section">
+                <div class="happiness-label">😊 Happiness: <span id="happinessCount">50</span>/100</div>
+                <div class="happiness-bar-container">
+                    <div class="happiness-bar" id="happinessBar"></div>
+                </div>
+            </div>
         </div>
 
         <div class="game-wrapper">
@@ -37,7 +43,7 @@
 
             <div class="sidebar">
                 <div class="section">
-                    <h3>Buildings</h3>
+                    <h3>Basic Buildings</h3>
                     <div class="building-buttons">
                         <button class="building-btn" data-building="house" data-cost="30">
                             🏠 House<br><small>Cost: 30</small>
@@ -58,6 +64,54 @@
                 </div>
 
                 <div class="section">
+                    <h3>Happiness Buildings</h3>
+                    <div class="building-buttons">
+                        <button class="building-btn" data-building="tavern" data-cost="50">
+                            🍺 Tavern<br><small>Cost: 50</small>
+                        </button>
+                        <button class="building-btn" data-building="park" data-cost="45">
+                            🌳 Park<br><small>Cost: 45</small>
+                        </button>
+                        <button class="building-btn" data-building="garden" data-cost="35">
+                            🌻 Garden<br><small>Cost: 35</small>
+                        </button>
+                        <button class="building-btn" data-building="temple" data-cost="120">
+                            ⛪ Temple<br><small>Cost: 120</small>
+                        </button>
+                        <button class="building-btn" data-building="theater" data-cost="85">
+                            🎭 Theater<br><small>Cost: 85</small>
+                        </button>
+                        <button class="building-btn" data-building="fountain" data-cost="40">
+                            ⛲ Fountain<br><small>Cost: 40</small>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Specialized Buildings</h3>
+                    <div class="building-buttons">
+                        <button class="building-btn" data-building="school" data-cost="90">
+                            🎓 School<br><small>Cost: 90</small>
+                        </button>
+                        <button class="building-btn" data-building="library" data-cost="100">
+                            📚 Library<br><small>Cost: 100</small>
+                        </button>
+                        <button class="building-btn" data-building="blacksmith" data-cost="95">
+                            🔨 Blacksmith<br><small>Cost: 95</small>
+                        </button>
+                        <button class="building-btn" data-building="bakery" data-cost="55">
+                            🍞 Bakery<br><small>Cost: 55</small>
+                        </button>
+                        <button class="building-btn" data-building="courthouse" data-cost="110">
+                            ⚖️ Courthouse<br><small>Cost: 110</small>
+                        </button>
+                        <button class="building-btn" data-building="road" data-cost="20">
+                            🛣️ Road<br><small>Cost: 20</small>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section">
                     <h3>Actions</h3>
                     <button class="action-btn" id="nextDayBtn">➡️ Next Day</button>
                     <button class="action-btn" id="resetBtn">🔄 Reset Game</button>
@@ -65,7 +119,7 @@
 
                 <div class="section">
                     <h3>Info</h3>
-                    <p class="info-text">Click on the map to place buildings. Each building generates resources over time.</p>
+                    <p class="info-text">Click on the map to place buildings. Each building generates resources and happiness over time. Keep your people happy!</p>
                 </div>
             </div>
         </div>
