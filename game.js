@@ -12,6 +12,7 @@ class Game {
         this.gold = 100;
         this.population = 10;
         this.food = 50;
+        this.happiness = 50;
         
         this.setupEventListeners();
         this.gameLoop();
@@ -48,7 +49,7 @@ class Game {
             this.gold -= buildingData.cost;
             this.updateUI();
         } else {
-            alert('Not enough gold! Need ' + buildingData.cost + ', have ' + this.gold);
+            alert('Not enough gold! Need ' + buildingData.cost + ', have ' + Math.floor(this.gold));
         }
     }
 
@@ -71,6 +72,10 @@ class Game {
         this.gold += resources.gold;
         this.food += resources.food;
         this.population += resources.population;
+        this.happiness += resources.happiness;
+        
+        // Clamp happiness between 0 and 100
+        this.happiness = Math.max(0, Math.min(100, this.happiness));
         
         // Consume food
         const foodConsumption = Math.floor(this.population * 0.5);
@@ -78,8 +83,17 @@ class Game {
         
         if (this.food < 0) {
             this.population = Math.max(1, Math.floor(this.population * 0.8));
+            this.happiness -= 10;
             this.food = 0;
         }
+        
+        // Low food affects happiness
+        if (this.food < 20) {
+            this.happiness -= 5;
+        }
+        
+        // Clamp happiness again
+        this.happiness = Math.max(0, Math.min(100, this.happiness));
         
         this.updateUI();
     }
@@ -90,6 +104,7 @@ class Game {
             this.gold = 100;
             this.population = 10;
             this.food = 50;
+            this.happiness = 50;
             this.town = new Town();
             this.selectedBuilding = null;
             this.updateUI();
@@ -102,6 +117,24 @@ class Game {
         document.getElementById('populationCount').textContent = Math.floor(this.population);
         document.getElementById('foodCount').textContent = Math.floor(this.food);
         document.getElementById('dayCount').textContent = this.day;
+        document.getElementById('happinessCount').textContent = Math.floor(this.happiness);
+        
+        // Update happiness bar color
+        const happinessBar = document.getElementById('happinessBar');
+        if (happinessBar) {
+            happinessBar.style.width = this.happiness + '%';
+            
+            // Change color based on happiness level
+            if (this.happiness < 25) {
+                happinessBar.style.backgroundColor = '#ff6b6b'; // Red
+            } else if (this.happiness < 50) {
+                happinessBar.style.backgroundColor = '#ffa500'; // Orange
+            } else if (this.happiness < 75) {
+                happinessBar.style.backgroundColor = '#ffff00'; // Yellow
+            } else {
+                happinessBar.style.backgroundColor = '#4ecca3'; // Green
+            }
+        }
     }
 
     draw() {
