@@ -47,47 +47,137 @@ class Building {
         return {
             gold: (base.gold || 0) * this.level,
             food: (base.food || 0) * this.level,
-            population: (base.population || 0) * this.level
+            population: (base.population || 0) * this.level,
+            happiness: (base.happiness || 0) * this.level
         };
     }
 }
 
 // Building types definition
 const buildingTypes = {
+    // Original buildings
     house: {
         name: 'House',
         emoji: '🏠',
         color: '#c35a3a',
         cost: 30,
-        production: { population: 2, gold: 1 }
+        production: { population: 2, gold: 1, happiness: 0.5 }
     },
     farm: {
         name: 'Farm',
         emoji: '🌾',
         color: '#90ee90',
         cost: 40,
-        production: { food: 5, population: 1 }
+        production: { food: 5, population: 1, happiness: 0.3 }
     },
     market: {
         name: 'Market',
         emoji: '🏪',
         color: '#daa520',
         cost: 60,
-        production: { gold: 8, food: 2 }
+        production: { gold: 8, food: 2, happiness: 1 }
     },
     mine: {
         name: 'Mine',
         emoji: '⛏️',
         color: '#696969',
         cost: 80,
-        production: { gold: 15 }
+        production: { gold: 15, happiness: -0.5 }
     },
     barracks: {
         name: 'Barracks',
         emoji: '🏰',
         color: '#8b4513',
         cost: 100,
-        production: { population: 3, gold: 2 }
+        production: { population: 3, gold: 2, happiness: 0.2 }
+    },
+    
+    // New happiness-focused buildings
+    tavern: {
+        name: 'Tavern',
+        emoji: '🍺',
+        color: '#8b6914',
+        cost: 50,
+        production: { gold: 3, happiness: 3 }
+    },
+    temple: {
+        name: 'Temple',
+        emoji: '⛪',
+        color: '#deb887',
+        cost: 120,
+        production: { happiness: 4, population: 1 }
+    },
+    park: {
+        name: 'Park',
+        emoji: '🌳',
+        color: '#228b22',
+        cost: 45,
+        production: { happiness: 2.5, population: 0.5 }
+    },
+    garden: {
+        name: 'Garden',
+        emoji: '🌻',
+        color: '#ffb6c1',
+        cost: 35,
+        production: { food: 2, happiness: 2, population: 0.5 }
+    },
+    school: {
+        name: 'School',
+        emoji: '🎓',
+        color: '#4169e1',
+        cost: 90,
+        production: { population: 2, gold: 1, happiness: 1.5 }
+    },
+    library: {
+        name: 'Library',
+        emoji: '📚',
+        color: '#8b4513',
+        cost: 100,
+        production: { happiness: 2, population: 0.5, gold: 1 }
+    },
+    blacksmith: {
+        name: 'Blacksmith',
+        emoji: '🔨',
+        color: '#a9a9a9',
+        cost: 95,
+        production: { gold: 12, population: 1, happiness: 0.5 }
+    },
+    bakery: {
+        name: 'Bakery',
+        emoji: '🍞',
+        color: '#d2691e',
+        cost: 55,
+        production: { food: 4, gold: 2, happiness: 1.5 }
+    },
+    courthouse: {
+        name: 'Courthouse',
+        emoji: '⚖️',
+        color: '#696969',
+        cost: 110,
+        production: { happiness: 1.5, population: 0.5, gold: 1 }
+    },
+    theater: {
+        name: 'Theater',
+        emoji: '🎭',
+        color: '#8b008b',
+        cost: 85,
+        production: { happiness: 3.5, gold: 2, population: 0.5 }
+    },
+    fountain: {
+        name: 'Fountain',
+        emoji: '⛲',
+        color: '#87ceeb',
+        cost: 40,
+        production: { happiness: 1.5, population: 0.3 }
+    },
+    
+    // Roads
+    road: {
+        name: 'Road',
+        emoji: '🛣️',
+        color: '#666666',
+        cost: 20,
+        production: { happiness: 0.5 }
     }
 };
 
@@ -126,13 +216,14 @@ class Town {
     }
 
     generateResources() {
-        let totalResources = { gold: 0, food: 0, population: 0 };
+        let totalResources = { gold: 0, food: 0, population: 0, happiness: 0 };
 
         this.buildings.forEach(building => {
             const production = building.getProduction();
             totalResources.gold += production.gold;
             totalResources.food += production.food;
             totalResources.population += production.population;
+            totalResources.happiness += production.happiness;
         });
 
         // Random events (small chance)
@@ -152,7 +243,7 @@ class Town {
         const stats = {
             totalBuildings: this.buildings.length,
             buildingTypes: {},
-            totalProduction: { gold: 0, food: 0, population: 0 }
+            totalProduction: { gold: 0, food: 0, population: 0, happiness: 0 }
         };
 
         this.buildings.forEach(building => {
@@ -162,6 +253,7 @@ class Town {
             stats.totalProduction.gold += production.gold;
             stats.totalProduction.food += production.food;
             stats.totalProduction.population += production.population;
+            stats.totalProduction.happiness += production.happiness;
         });
 
         return stats;
